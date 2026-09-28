@@ -12,6 +12,11 @@ import paymentRouter from "./routes/payment.routes.js";
 import * as paymentController from "./controller/payment.controller.js"
 
 const app = express();
+app.use(cors({
+    origin: ["http://localhost:5173",
+        "https://ecommerce-frontend-smoky-two.vercel.app"],
+    credentials: true
+}));
 app.post(
     "/api/payment/webhook",
     express.raw({ type: "application/json" }),
@@ -19,11 +24,7 @@ app.post(
 );
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: ["http://localhost:5173",
-        "http://localhost:5174"],
-    credentials: true
-}));
+
 
 const upload = multer({ storage: multer.memoryStorage() })
 app.use(morgan("dev"));
